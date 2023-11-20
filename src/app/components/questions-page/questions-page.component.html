@@ -1,0 +1,14 @@
+<div class="questions-page">
+  <app-navbar></app-navbar>
+  <div class="questions-page-container">
+    <div class="unanswered-questions">
+      <h2>Unanswered Questions</h2>
+      <app-question-list [questions]="(unansweredQuestions$ | async) ?? []" [showOptions]="true" [showAnswerButtons]="true" [showActions]="false" (answer)="openAnswerDialog($event)"></app-question-list>
+    </div>
+  
+    <div class="answered-questions">
+      <h2>Answered Questions</h2>
+      <app-question-list [questions]="(answeredQuestions$ | async) ?? []" [showAnswerButtons]="true" [showOptions]="false" [showActions]="false" (rollback)="rollbackAnswer($event)"></app-question-list>
+    </div>
+  </div>
+</div>

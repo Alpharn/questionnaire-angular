@@ -1,0 +1,16 @@
+<div class="manage-questions">
+  <app-navbar></app-navbar>
+  <h1>Question Management Page</h1>
+  <button class="create-btn" mat-raised-button (click)="navigateToCreateQuestion()">
+    Create question
+    <mat-icon>add</mat-icon>
+  </button>
+  <div *ngIf="(questions$ | async) as questions">
+    <ng-container *ngIf="questions.length; else noQuestionsTemplate">
+      <app-question-list [questions]="questions" (edit)="editQuestion($event)" (delete)="deleteQuestion($event)"></app-question-list>
+    </ng-container>
+  </div>
+  <ng-template #noQuestionsTemplate>
+    <p>There is no questions. Let's create a new one.</p>
+  </ng-template>
+</div>

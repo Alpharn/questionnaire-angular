@@ -1,0 +1,31 @@
+<div class="questions-container">
+ 
+  <div *ngFor="let question of questions">
+  <mat-card class="question-card">
+
+    <mat-card-header>
+      <mat-card-title>{{ question.questionText }}</mat-card-title>
+      <mat-card-subtitle>{{ question.createdAt | date : 'MMM dd, yyyy HH:mm' : 'UTC+2' }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>Type: {{ question.questionType | titlecase }}</p>
+      <p class="answer-text" *ngIf="question.answered">Answer: {{ question.answer }}</p>
+      <p class="options-text" *ngIf="showOptions && question.options && question.options.length > 0">
+        Options: <span *ngFor="let option of question.options; let i = index">{{ option }}<span *ngIf="i < question.options.length - 1">, </span></span>
+      </p>
+    </mat-card-content>
+
+    <mat-card-actions *ngIf="showActions">
+      <button mat-button (click)="edit.emit(question.id)">Edit</button>
+      <button mat-button color="warn" (click)="delete.emit(question.id)">Delete</button>
+    </mat-card-actions>
+
+    <mat-card-actions *ngIf="showAnswerButtons">
+      <button class="answer-btn" *ngIf="!question.answered" mat-button (click)="onAnswer(question.id)">Answer</button>
+      <button *ngIf="question.answered" mat-button color="warn" (click)="onRollback(question.id)">Rollback Answer</button>
+    </mat-card-actions>
+    
+    </mat-card>
+  </div>
+</div>

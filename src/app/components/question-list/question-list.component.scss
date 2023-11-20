@@ -1,0 +1,28 @@
+.questions-container {
+	max-width: 1200px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	align-items: stretch;
+}
+
+.question-card {
+	width: 240px;
+	height: 200px;
+}
+
+.questions-wrapper {
+	margin: 0 auto;
+}
+
+.options-text, .answer-text {
+  overflow: hidden;
+  white-space: nowrap; 
+  text-overflow: ellipsis;
+  max-width: 100%; 
+}
+
+button.answer-btn {
+	background-color: #1C6E8C;
+	color: #FFF;
+}

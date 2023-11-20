@@ -1,0 +1,47 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title class="card-title">{{ data.questionText }}</mat-card-title>
+  </mat-card-header>
+
+  <form [formGroup]="answerForm" (ngSubmit)="submitAnswer()">
+    <mat-card-content>
+      <div *ngIf="data.questionType === 'open'">
+        <mat-form-field appearance="outline">
+          <textarea
+            class="answer-open"
+            formControlName="answer"
+            matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
+            placeholder="Type your answer"
+            minlength="1"
+            maxlength="255">
+          </textarea>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="data.questionType === 'single'">
+        <div *ngFor="let option of data.options">
+          <label >
+            <input type="radio" formControlName="answer" [value]="option"> {{ option }}
+          </label>
+        </div> 
+      </div>
+
+      <div *ngIf="data.questionType === 'multiple'" formArrayName="answer">
+        <mat-hint class="option-hint">Please select at least two options</mat-hint>
+        <div *ngFor="let option of data.options; let i = index">
+          <label>
+            <input type="checkbox" [formControlName]="i"> {{ option }}
+          </label>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button aria-label="Save answer" type="submit">Save answer</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

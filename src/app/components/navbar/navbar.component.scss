@@ -1,0 +1,41 @@
+$primary-color: #1F5065;
+
+.navbar {
+  margin: 20px 0;
+}
+.navbar-logo {
+  font-size: 20px;
+}
+
+.navbar .mat-toolbar.mat-primary {
+  background-color: $primary-color;
+}
+
+.mat-toolbar {
+  border-radius: 4px;
+}
+
+.mat-toolbar-row {
+  justify-content: space-between;
+}
+
+.btn-group {
+	display: flex;
+  gap: 8px;
+}
+
+button {
+  font-size: 16px;
+}
+
+button .assignment-icon, button .clear-icon {
+  font-size: 2rem;
+  height: 2rem;
+  width: 2rem;
+}
+
+button .back-icon {
+  font-size: 2rem;
+  height: 2rem;
+  width: 2rem;
+}
