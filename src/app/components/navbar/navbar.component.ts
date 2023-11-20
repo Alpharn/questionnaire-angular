@@ -28,6 +28,7 @@ export class NavbarComponent {
   /** Clearing the local storage */
   clear(): void {
     localStorage.clear();
+    window.location.reload();
   }
   
   /** Navigates user to the home page */
