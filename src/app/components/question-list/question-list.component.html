@@ -1,31 +1,71 @@
 <div class="questions-container">
- 
+
   <div *ngFor="let question of questions">
-  <mat-card class="question-card">
+    <mat-card class="question-card">
 
-    <mat-card-header>
-      <mat-card-title>{{ question.questionText }}</mat-card-title>
-      <mat-card-subtitle>{{ question.createdAt | date : 'MMM dd, yyyy HH:mm' : 'UTC+2' }}</mat-card-subtitle>
-    </mat-card-header>
+      <mat-card-header>
+        <mat-card-title class="card-title">{{ question.questionText }}</mat-card-title>
+        <mat-card-subtitle>{{ question.createdAt | date : 'MMM dd, yyyy HH:mm' : 'UTC+2' }}</mat-card-subtitle>
+      </mat-card-header>
 
-    <mat-card-content>
-      <p>Type: {{ question.questionType | titlecase }}</p>
-      <p class="answer-text" *ngIf="question.answered">Answer: {{ question.answer }}</p>
-      <p class="options-text" *ngIf="showOptions && question.options && question.options.length > 0">
-        Options: <span *ngFor="let option of question.options; let i = index">{{ option }}<span *ngIf="i < question.options.length - 1">, </span></span>
-      </p>
-    </mat-card-content>
+      <mat-card-content class="card-content">
+        <p>Type: {{ question.questionType | titlecase }}</p>
+        <p class="answer-text" *ngIf="question.answered && showAnswers">Answer: {{ question.answer }}</p>
+        <p class="options-text" *ngIf="showOptions && question.options && question.options.length > 0">
+          Options: <span *ngFor="let option of question.options; let i = index">{{ option }}<span
+              *ngIf="i < question.options.length - 1">, </span></span>
+        </p>
 
-    <mat-card-actions *ngIf="showActions">
-      <button mat-button (click)="edit.emit(question.id)">Edit</button>
-      <button mat-button color="warn" (click)="delete.emit(question.id)">Delete</button>
-    </mat-card-actions>
+        <!-- Answer Form -->
+        <div *ngIf="!question.answered && showAnswerForm">
+          <form [formGroup]="answerForms[question.id]">
 
-    <mat-card-actions *ngIf="showAnswerButtons">
-      <button class="answer-btn" *ngIf="!question.answered" mat-button (click)="onAnswer(question.id)">Answer</button>
-      <button *ngIf="question.answered" mat-button color="warn" (click)="onRollback(question.id)">Rollback Answer</button>
-    </mat-card-actions>
-    
+            <div class="answer-input" *ngIf="question.questionType === 'open'">
+              <mat-form-field appearance="outline">
+                <textarea class="answer-open" [formControlName]="'answer'" matInput cdkTextareaAutosize
+                  placeholder="Type your answer here" #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="4" placeholder="Type your answer" minlength="1" maxlength="255">
+                </textarea>
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="question.questionType === 'single'">
+              <cdk-virtual-scroll-viewport itemSize="16" class="example-viewport">
+                <mat-radio-group class="radio-group" [formControlName]="'answer'">
+                  <mat-radio-button *ngFor="let option of question.options" [value]="option">
+                    {{ option }}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </cdk-virtual-scroll-viewport>
+            </div>
+
+            <div *ngIf="question.questionType === 'multiple'">
+              <cdk-virtual-scroll-viewport itemSize="16" class="example-viewport">
+                <div class="mat-checkbox" formArrayName="answer">
+                  <mat-checkbox *cdkVirtualFor="let option of question.options; let i = index" [formControlName]="i">
+                    {{ option }}
+                  </mat-checkbox>
+                </div>
+              </cdk-virtual-scroll-viewport>
+            </div>
+
+          </form>
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions class="answer-buttons" *ngIf="showAnswerButtons">
+        <button class="answer-btn" *ngIf="!question.answered" mat-button type="submit"
+          (click)="submitAnswer(question.id)">Answer</button>
+        <button class="rollback-btn" *ngIf="question.answered" mat-button color="warn"
+          (click)="onRollback(question.id)">Rollback</button>
+      </mat-card-actions>
+
+      <mat-card-actions class="edit-buttons" *ngIf="showActions">
+        <button class="edit-btn" mat-button (click)="edit.emit(question.id)">Edit</button>
+        <button class="delete-btn" mat-button color="warn" (click)="delete.emit(question.id)">Delete</button>
+      </mat-card-actions>
+
     </mat-card>
   </div>
 </div>

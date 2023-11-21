@@ -13,15 +13,15 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { ManageQuestionsComponent } from './components/manage-questions/manage-questions.component';
 import { QuestionFormComponent } from './components/question-form/question-form.component';
 import { QuestionListComponent } from './components/question-list/question-list.component';
 import { QuestionsPageComponent } from './components/questions-page/questions-page.component';
-import { AnswerComponent } from './components/answer/answer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { questionReducer } from './store/questions/reducers/question.reducer';
 import { QuestionEffects } from './store/questions/effects/question.effects';
@@ -33,7 +33,6 @@ import { QuestionEffects } from './store/questions/effects/question.effects';
     QuestionFormComponent,
     QuestionListComponent,
     QuestionsPageComponent,
-    AnswerComponent,
     NavbarComponent
   ],
   imports: [
@@ -47,8 +46,9 @@ import { QuestionEffects } from './store/questions/effects/question.effects';
     MatInputModule,
     MatCardModule,
     MatIconModule,
+    ScrollingModule,
+    MatCheckboxModule,
     MatToolbarModule,
-    MatDialogModule,
     StoreModule.forRoot({questions: questionReducer}, {}),
     EffectsModule.forRoot([QuestionEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
