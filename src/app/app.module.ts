@@ -16,7 +16,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { ManageQuestionsComponent } from './components/manage-questions/manage-questions.component';
 import { QuestionFormComponent } from './components/question-form/question-form.component';
@@ -46,7 +45,6 @@ import { QuestionEffects } from './store/questions/effects/question.effects';
     MatInputModule,
     MatCardModule,
     MatIconModule,
-    ScrollingModule,
     MatCheckboxModule,
     MatToolbarModule,
     StoreModule.forRoot({questions: questionReducer}, {}),

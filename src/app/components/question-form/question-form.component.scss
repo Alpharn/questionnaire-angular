@@ -3,11 +3,6 @@
 	margin: 40px auto;
 }
 
-.form {
-	display: flex;
-	flex-direction: column;
-}
-
 .card-header {
 	border-bottom: 2px solid #ebebeb;
 	margin-bottom: 10px;
@@ -33,7 +28,7 @@ button {
 	margin: 14px 0;
 }
 
-button.discard-btn {
+button.discard-btn:not(:disabled) {
 	background-color: #B0233A;
 	color: #FFF;
 }
@@ -46,10 +41,6 @@ button.submit-btn:not(:disabled) {
 button.option-btn {
 	background-color: #1C6E8C;
 	color: #FFF;
-}
-
-mat-form-field {
-	width: 260px;
 }
 
 .radio-group {

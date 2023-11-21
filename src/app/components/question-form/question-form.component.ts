@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -6,7 +6,6 @@ import { switchMap, take } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import { IQuestion } from 'src/app/interfaces/question';
-import { minOptionsValidator } from 'src/app/validators/question-validators';
 import { QuestionState } from "src/app/store/questions/reducers/question.reducer";
 import * as QuestionActions from 'src/app/store/questions/actions/question.actions';
 import { selectQuestionById } from 'src/app/store/questions/selectors/question.selectors';
@@ -22,19 +21,31 @@ export class QuestionFormComponent implements OnInit {
   @Input() mode: 'create' | 'edit' = 'create';
   question: IQuestion | null = null;
   isSubmitted: boolean = false;
-  
+
   questionForm: FormGroup = this.fb.group({
     questionText: ['', Validators.required],
     questionType: ['single', Validators.required],
-    options: this.fb.array([], minOptionsValidator())
-  });
+    options: this.fb.array([
+      this.fb.group({ option: this.fb.control('', Validators.required) }),
+      this.fb.group({ option: this.fb.control('', Validators.required) })
+    ])
+  })
+
+  questionTypes = [
+    { label: 'Single Choice', value: 'single' },
+    { label: 'Multiple Choice', value: 'multiple' },
+    { label: 'Open Question', value: 'open' },
+  ];
+
+  get options(): FormArray {
+    return this.questionForm.get('options') as FormArray;
+  }
 
   constructor(
     private fb: FormBuilder,
     private store: Store<QuestionState>,
     private router: Router,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
   ) {}
   
   ngOnInit(): void {
@@ -53,7 +64,7 @@ export class QuestionFormComponent implements OnInit {
         this.loadQuestion(question);
       }
     });
-
+  
     this.setupFormChanges();
   }
 
@@ -62,8 +73,10 @@ export class QuestionFormComponent implements OnInit {
     if (questionTypeControl) {
       questionTypeControl.valueChanges.subscribe(value => {
         if (value === 'open') {
-          while (this.options.length !== 0) {
-            this.options.removeAt(0);
+          this.options.clear();
+        } else {
+          while (this.options.length < 2) {
+            this.addOption();
           }
         }
         this.options.updateValueAndValidity();
@@ -71,17 +84,11 @@ export class QuestionFormComponent implements OnInit {
     }
   }
 
-  get options(): FormArray {
-    return this.questionForm.get('options') as FormArray;
-  }
-
   addOption(): void {
     const optionGroup = this.fb.group({
       option: this.fb.control('', Validators.required)
     });
-  
     this.options.push(optionGroup);
-    this.cdr.detectChanges();
   }
 
   removeOption(index: number): void {
@@ -92,15 +99,14 @@ export class QuestionFormComponent implements OnInit {
   private loadQuestion(question: IQuestion): void {
     this.question = question;
     this.questionForm.patchValue({
-      questionText: question.questionText,
-      questionType: question.questionType,
-      options: question.options
+        questionText: question.questionText,
+        questionType: question.questionType
     });
 
-    this.questionForm.setControl(
-      'options', 
-      this.fb.array(question.options.map(option => this.fb.group({ option: option })))
+    const optionGroups = question.options.map(option => 
+        this.fb.group({ option: option })
     );
+    this.questionForm.setControl('options', this.fb.array(optionGroups));
   }
   
   saveQuestion(): void {
@@ -111,7 +117,7 @@ export class QuestionFormComponent implements OnInit {
         questionText: formValue.questionText,
         questionType: formValue.questionType,
         options: formValue.options.map((optionGroup: { option: string }) => optionGroup.option),
-        createdAt: this.mode === 'edit' && this.question ? this.question.createdAt : new Date(),
+        createdAt: new Date(),
         answered: this.mode === 'edit' && this.question ? this.question.answered : false
       };
 

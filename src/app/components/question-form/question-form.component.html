@@ -15,12 +15,11 @@
           Question text is required.
         </mat-error>
       </mat-form-field>
-
       <mat-radio-group class="radio-group" aria-label="Select an option" formControlName="questionType">
         <mat-label>Type of Question:</mat-label>
-        <mat-radio-button class="radio-btn" value="single">Single Choice</mat-radio-button>
-        <mat-radio-button class="radio-btn" value="multiple">Multiple Choice</mat-radio-button>
-        <mat-radio-button class="radio-btn" value="open">Open Question</mat-radio-button>
+        <mat-radio-button *ngFor="let type of questionTypes" class="radio-btn" [value]="type.value">
+          {{ type.label }}
+        </mat-radio-button>
       </mat-radio-group>
 
       <div *ngIf="questionForm.get('questionType')?.value !== 'open'" formArrayName="options">
@@ -28,7 +27,7 @@
           <mat-form-field appearance="outline">
             <mat-label>Answer Options:</mat-label>
             <input matInput formControlName="option" placeholder="Enter your option here">
-            <button matIconSuffix mat-icon-button aria-label="Clear" (click)="removeOption(i)">
+            <button *ngIf="options.length > 2" matIconSuffix mat-icon-button aria-label="Clear" (click)="removeOption(i)">
               <mat-icon>close</mat-icon>
             </button>
             <mat-error *ngIf="optionControl.invalid">Option is required.</mat-error>

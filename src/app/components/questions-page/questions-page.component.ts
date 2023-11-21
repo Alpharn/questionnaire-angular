@@ -18,9 +18,7 @@ export class QuestionsPageComponent implements OnInit {
   unansweredQuestions$!: Observable<IQuestion[]>;
   answeredQuestions$!: Observable<IQuestion[]>;
 
-  constructor( 
-    private store: Store<QuestionState>,
-    ){}
+  constructor( private store: Store<QuestionState> ){}
 
   ngOnInit(): void {
     this.store.dispatch(QuestionActions.loadQuestions());

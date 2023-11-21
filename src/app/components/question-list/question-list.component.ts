@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { IQuestion } from 'src/app/interfaces/question';
 import * as QuestionActions from 'src/app/store/questions/actions/question.actions';
-import { multipleChoiceValidator } from 'src/app/validators/question-validators';
+import { multipleChoiceValidator } from "src/app/validators/question-validators";
 
 @Component({
   selector: 'app-question-list',
@@ -43,18 +43,14 @@ export class QuestionListComponent implements OnInit, OnChanges {
   }
   
   createAnswerForm(question: IQuestion): FormGroup {
-  if (question.questionType === 'open') {
-    return this.fb.group({ answer: ['', Validators.required] });
-  } else if (question.questionType === 'single') {
-    return this.fb.group({ answer: ['', Validators.required] });
-  } else if (question.questionType === 'multiple') {
-    const controls = question.options.map(() => new FormControl(false));
-    return this.fb.group({
-      answer: new FormArray(controls, multipleChoiceValidator) 
-    });
+    if (question.questionType === 'open' || question.questionType === 'single') {
+      return this.fb.group({ answer: ['', Validators.required] });
+    } else if (question.questionType === 'multiple') {
+      const controls = question.options.map(() => new FormControl(false));
+      return this.fb.group({ answer: new FormArray(controls, multipleChoiceValidator) });
+    }
+    return this.fb.group({});
   }
-  return this.fb.group({});
- }
 
   submitAnswer(questionId: string): void {
     const answerForm = this.answerForms[questionId];
@@ -71,4 +67,5 @@ export class QuestionListComponent implements OnInit, OnChanges {
   onRollback(questionId: string): void {
     this.store.dispatch(QuestionActions.rollbackAnswer({ id: questionId }));
   }
+  
 }
