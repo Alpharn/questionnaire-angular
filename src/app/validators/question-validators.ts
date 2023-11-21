@@ -1,4 +1,4 @@
-import { ValidatorFn, AbstractControl, FormArray, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormArray, ValidationErrors } from '@angular/forms';
 
 export function multipleChoiceValidator(control: AbstractControl): ValidationErrors | null {
   if (control instanceof FormArray) {
