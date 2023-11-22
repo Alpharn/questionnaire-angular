@@ -5,7 +5,10 @@ import { Router } from '@angular/router';
 
 import * as QuestionActions from '../actions/question.actions';
 import { QuestionService } from 'src/app/services/question.service';
-
+/**
+ * This class contains the effects that handle the side effects of actions related to questions,
+ * such as adding, loading, deleting, answering, and rolling back answers to questions.
+ */
 @Injectable()
 export class QuestionEffects {
 
@@ -14,7 +17,11 @@ export class QuestionEffects {
     private questionService: QuestionService,
     private router: Router
   ) {}
-
+  
+  /**
+   * Effect to handle the addition of a new question.
+   * Upon successful addition, it navigates to the manage questions page.
+   */
   public addQuestion$ = createEffect(() => this.actions$.pipe(
     ofType(QuestionActions.addQuestion),
     switchMap(action => this.questionService.saveQuestion(action.question).pipe(
@@ -23,7 +30,8 @@ export class QuestionEffects {
       catchError(error => of(QuestionActions.addQuestionFailure({ error })))
     ))
   ));
-
+  
+  /** Effect to handle the loading of questions */
   public loadQuestions$ = createEffect(() => this.actions$.pipe(
     ofType(QuestionActions.loadQuestions),
     mergeMap(() => of(this.questionService.getQuestions()).pipe(
@@ -32,6 +40,7 @@ export class QuestionEffects {
     ))
   ));
 
+  /** Effect to handle the deletion of a question */    
   public deleteQuestion$ = createEffect(() => this.actions$.pipe(
     ofType(QuestionActions.deleteQuestion),
     switchMap((action) => {
@@ -40,7 +49,8 @@ export class QuestionEffects {
     }),
     catchError(error => of(QuestionActions.deleteQuestionFailure({ error })))
   ))
-
+  
+  /** Effect to handle the answering of a question */
   public answerQuestion$ = createEffect(() => this.actions$.pipe(
     ofType(QuestionActions.answerQuestion),
     switchMap(action => {
@@ -50,7 +60,8 @@ export class QuestionEffects {
       );
     })
   ));
-  
+
+  /** Effect to handle the rollback of an answer to a question */
   public rollbackAnswer$ = createEffect(() => this.actions$.pipe(
     ofType(QuestionActions.rollbackAnswer),
     switchMap(action => {

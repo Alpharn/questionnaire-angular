@@ -12,7 +12,7 @@ import { Observable, map } from 'rxjs';
 export class NavbarComponent {
 
 
-  /** Observable that determines if the back button should be shown based on the current URL. */  
+  /** Observable that determines if the back button should be shown based on the current URL */  
   showBackButton$: Observable<boolean> = this.router.events.pipe(
     map(() => {
       const url = this.router.url;
@@ -33,7 +33,7 @@ export class NavbarComponent {
   
   /** Navigates user to the home page */
   goBack(): void {
-    this.location.back();
+    this.router.navigate(['/manage-questions']);
   }
 
 }

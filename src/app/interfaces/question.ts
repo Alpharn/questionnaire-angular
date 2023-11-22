@@ -1,3 +1,4 @@
+/** IQuestion - Interface representing the structure of a question */
 export interface IQuestion {
     id: string;
     questionText: string;

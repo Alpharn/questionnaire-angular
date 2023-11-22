@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { IQuestion } from 'src/app/interfaces/question';
 
+/** Load question actions */
 export const loadQuestions = createAction(
   '[Questions] Load Questions'
 );
@@ -16,6 +17,7 @@ export const loadQuestionsFailure = createAction(
   props<{ error: any }>()
 );
 
+/** Add question actions */
 export const addQuestion = createAction(
   '[Questions] Add Question', 
   props<{ question: IQuestion }>()
@@ -31,6 +33,7 @@ export const addQuestionFailure = createAction(
   props<{ error: any }>()
 );
 
+/** Delete question actions */
 export const deleteQuestion = createAction(
   '[Questions] Delete Question', 
   props<{ id: string }>()
@@ -46,6 +49,7 @@ export const deleteQuestionFailure = createAction(
   props<{ error: any }>()
 );
 
+/** Answer question actions */
 export const answerQuestion = createAction(
   '[Questions] Answer Question',
   props<{ id: string, answer: string | string[] | null }>()
@@ -61,6 +65,7 @@ export const answerQuestionFailure = createAction(
   props<{ error: any }>()
 );
 
+/** Rollback answer question actions */
 export const rollbackAnswer = createAction(
   '[Questions] Rollback Answer',
   props<{ id: string }>()

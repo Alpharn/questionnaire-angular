@@ -10,6 +10,12 @@ import { QuestionState } from "src/app/store/questions/reducers/question.reducer
 import * as QuestionActions from 'src/app/store/questions/actions/question.actions';
 import { selectQuestionById } from 'src/app/store/questions/selectors/question.selectors';
 
+
+/**
+ * QuestionFormComponent - Component for creating and editing questions
+ * This component handles both creating a new question and editing an existing one,
+ * based on the mode ('create' or 'edit') provided as an input.
+ */
 @Component({
   selector: 'app-question-form',
   templateUrl: './question-form.component.html',
@@ -18,10 +24,15 @@ import { selectQuestionById } from 'src/app/store/questions/selectors/question.s
 
 export class QuestionFormComponent implements OnInit {
 
+  /** Mode of the form: 'create' or 'edit' */
   @Input() mode: 'create' | 'edit' = 'create';
+
+  /** The question object to be edited, if in edit mode */
   question: IQuestion | null = null;
+
   isSubmitted: boolean = false;
 
+  /** The form group for question data */
   questionForm: FormGroup = this.fb.group({
     questionText: ['', Validators.required],
     questionType: ['single', Validators.required],
@@ -31,12 +42,14 @@ export class QuestionFormComponent implements OnInit {
     ])
   })
 
+   /** Available question types for selection */
   questionTypes = [
     { label: 'Single Choice', value: 'single' },
     { label: 'Multiple Choice', value: 'multiple' },
     { label: 'Open Question', value: 'open' },
   ];
 
+  /** Getter for options FormArray */
   get options(): FormArray {
     return this.questionForm.get('options') as FormArray;
   }
@@ -68,22 +81,7 @@ export class QuestionFormComponent implements OnInit {
     this.setupFormChanges();
   }
 
-  private setupFormChanges(): void {
-    const questionTypeControl = this.questionForm.get('questionType');
-    if (questionTypeControl) {
-      questionTypeControl.valueChanges.subscribe(value => {
-        if (value === 'open') {
-          this.options.clear();
-        } else {
-          while (this.options.length < 2) {
-            this.addOption();
-          }
-        }
-        this.options.updateValueAndValidity();
-      });
-    }
-  }
-
+  /** Adds an option to the options FormArray */
   addOption(): void {
     const optionGroup = this.fb.group({
       option: this.fb.control('', Validators.required)
@@ -91,24 +89,20 @@ export class QuestionFormComponent implements OnInit {
     this.options.push(optionGroup);
   }
 
+  /**
+   * Removes an option from the options FormArray at a specific index.
+   * 
+   * @param index The index of the option to remove.
+   */
   removeOption(index: number): void {
     this.options.removeAt(index);
     this.options.updateValueAndValidity();
   }
-
-  private loadQuestion(question: IQuestion): void {
-    this.question = question;
-    this.questionForm.patchValue({
-        questionText: question.questionText,
-        questionType: question.questionType
-    });
-
-    const optionGroups = question.options.map(option => 
-        this.fb.group({ option: option })
-    );
-    this.questionForm.setControl('options', this.fb.array(optionGroups));
-  }
   
+  /**
+   * Saves the question data to the store and navigates back to the manage questions page.
+   * Handles both creation of a new question and updating an existing one.
+   */
   saveQuestion(): void {
     if (this.questionForm.valid) {
       const formValue = this.questionForm.value;
@@ -126,8 +120,47 @@ export class QuestionFormComponent implements OnInit {
     }
   }
 
+  /** Cancels the form and navigates back to the manage questions page */
   cancel(): void {
     this.router.navigate(['/manage-questions']);
+  }
+
+  /**
+   * Loads a question into the form for editing.
+   * 
+   * @param question The question to be loaded for editing.
+   */
+  private loadQuestion(question: IQuestion): void {
+    this.question = question;
+    this.questionForm.patchValue({
+        questionText: question.questionText,
+        questionType: question.questionType
+    });
+
+    const optionGroups = question.options.map(option => 
+        this.fb.group({ option: option })
+    );
+    this.questionForm.setControl('options', this.fb.array(optionGroups));
+  }
+
+  /**
+   * Sets up form changes to handle dynamic changes in the form, 
+   * especially for changing question types.
+   */
+  private setupFormChanges(): void {
+    const questionTypeControl = this.questionForm.get('questionType');
+    if (questionTypeControl) {
+      questionTypeControl.valueChanges.subscribe(value => {
+        if (value === 'open') {
+          this.options.clear();
+        } else {
+          while (this.options.length < 2) {
+            this.addOption();
+          }
+        }
+        this.options.updateValueAndValidity();
+      });
+    }
   }
 
 }

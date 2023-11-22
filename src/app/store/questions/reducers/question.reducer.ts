@@ -3,6 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import * as QuestionActions from '../actions/question.actions';
 import { IQuestion } from 'src/app/interfaces/question';
 
+/** QuestionState - Interface representing the state structure for questions */
 export interface QuestionState {
   questions: IQuestion[];
   error: any;
@@ -13,6 +14,7 @@ export const initialState: QuestionState = {
   error: null
 };
 
+/** This reducer updates the state based on different question actions */
 export const questionReducer = createReducer(
   initialState,
   on(QuestionActions.loadQuestionsSuccess, (state, { questions }) => ({ 

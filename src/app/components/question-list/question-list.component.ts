@@ -11,29 +11,42 @@ import { multipleChoiceValidator } from "src/app/validators/question-validators"
   templateUrl: './question-list.component.html',
   styleUrls: ['./question-list.component.scss']
 })
+
 export class QuestionListComponent implements OnInit, OnChanges {
+
+  /** Array of questions to be displayed */
   @Input() questions: IQuestion[] = [];
+
+   /** Flags to control the visibility of various elements in the template */
   @Input() showActions: boolean = true;
   @Input() showOptions: boolean = false; 
   @Input() showAnswerButtons: boolean = false;
   @Input() showAnswerForm: boolean = true;
   @Input() showAnswers: boolean = true;
+   /** Events to emit when edit or delete actions are triggered */
   @Output() edit = new EventEmitter<string>();
   @Output() delete = new EventEmitter<string>();
 
+  /** Object to store answer forms for each question */
   answerForms: { [id: string]: FormGroup } = {};
 
   constructor(
     private fb: FormBuilder,
     private store: Store,
   ) {}
-
+  
+  /** OnInit lifecycle hook to initialize answer forms for each question */
   ngOnInit(): void {
     this.questions.forEach(question => {
       this.answerForms[question.id] = this.createAnswerForm(question);
     });
   }
-
+  
+  /**
+   * OnChanges lifecycle hook to update answer forms when questions input changes.
+   *
+   * @param changes Object containing changes of input properties
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['questions'] && changes['questions'].currentValue) {
       this.questions.forEach(question => {
@@ -42,6 +55,13 @@ export class QuestionListComponent implements OnInit, OnChanges {
     }
   }
   
+  /**
+   * Creates a FormGroup for answering a question based on its type.
+   *
+   * @param question The question object based on which the form is created.
+   * 
+   * @return FormGroup for answering the provided question.
+   */
   createAnswerForm(question: IQuestion): FormGroup {
     if (question.questionType === 'open' || question.questionType === 'single') {
       return this.fb.group({ answer: ['', Validators.required] });
@@ -52,6 +72,11 @@ export class QuestionListComponent implements OnInit, OnChanges {
     return this.fb.group({});
   }
 
+  /**
+   * Submits an answer for a question.
+   *
+   * @param questionId The ID of the question being answered.
+   */
   submitAnswer(questionId: string): void {
     const answerForm = this.answerForms[questionId];
     if (answerForm.valid) {
@@ -64,6 +89,11 @@ export class QuestionListComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Dispatches an action to rollback an answer for a question.
+   *
+   * @param questionId The ID of the question for which the answer is being rolled back.
+   */
   onRollback(questionId: string): void {
     this.store.dispatch(QuestionActions.rollbackAnswer({ id: questionId }));
   }
