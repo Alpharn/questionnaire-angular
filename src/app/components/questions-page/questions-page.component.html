@@ -3,11 +3,11 @@
   <div class="questions-page-container">
     <div class="unanswered-questions">
       <h2>Unanswered Questions</h2>
-      <app-question-list [
-        questions]="(unansweredQuestions$ | async) ?? []" 
+      <app-question-list
+        [questions]="(unansweredQuestions$ | async) ?? []" 
         [showOptions]="false" 
         [showAnswerButtons]="true" 
-        [showActions]="false" >
+        [showActions]="false">
       </app-question-list>
     </div>
   
