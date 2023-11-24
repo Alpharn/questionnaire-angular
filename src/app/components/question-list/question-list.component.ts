@@ -17,13 +17,14 @@ export class QuestionListComponent implements OnInit, OnChanges {
   /** Array of questions to be displayed */
   @Input() questions: IQuestion[] = [];
 
-   /** Flags to control the visibility of various elements in the template */
+  /** Flags to control the visibility of various elements in the template */
   @Input() showActions: boolean = true;
   @Input() showOptions: boolean = false; 
   @Input() showAnswerButtons: boolean = false;
   @Input() showAnswerForm: boolean = true;
   @Input() showAnswers: boolean = true;
-   /** Events to emit when edit or delete actions are triggered */
+
+  /** Events to emit when edit or delete actions are triggered */
   @Output() edit = new EventEmitter<string>();
   @Output() delete = new EventEmitter<string>();
 

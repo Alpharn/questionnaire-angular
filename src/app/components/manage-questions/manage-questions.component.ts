@@ -16,6 +16,7 @@ import { selectQuestions } from 'src/app/store/questions/selectors/question.sele
   templateUrl: './manage-questions.component.html',
   styleUrls: ['./manage-questions.component.scss']
 })
+
 export class ManageQuestionsComponent implements OnInit {
   
   /** Observable stream of questions */

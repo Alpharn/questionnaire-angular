@@ -6,10 +6,10 @@
         <button *ngIf="showBackButton$ | async" mat-button (click)="goBack()">
           <mat-icon class="back-icon">arrow_back_ios</mat-icon> Back
         </button>
-          <button mat-button [routerLink]="['/lists-of-questions']">
-            <mat-icon class="assignment-icon">assignment</mat-icon>
-            List of questions
-          </button>
+        <button mat-button [routerLink]="['/lists-of-questions']">
+          <mat-icon class="assignment-icon">assignment</mat-icon>
+          List of questions
+        </button>
         <button mat-button (click)="clear()">
           <mat-icon class="clear-icon">delete_outline</mat-icon>
           Clear all

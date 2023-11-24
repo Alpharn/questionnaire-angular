@@ -46,17 +46,17 @@
 
       <mat-card-actions class="answer-buttons" *ngIf="showAnswerButtons">
         <button class="answer-btn" 
-        *ngIf="!question.answered" 
-        mat-button type="submit" 
-        (click)="submitAnswer(question.id)" 
-        [disabled]="!answerForms[question.id].valid">
-        Answer
+          *ngIf="!question.answered" 
+          mat-button type="submit" 
+          (click)="submitAnswer(question.id)" 
+          [disabled]="!answerForms[question.id].valid">
+          Answer
         </button>
         <button class="rollback-btn" 
-        *ngIf="question.answered" 
-        mat-button color="warn" 
-        (click)="onRollback(question.id)">
-        Rollback
+          *ngIf="question.answered" 
+          mat-button color="warn" 
+          (click)="onRollback(question.id)">
+          Rollback
         </button>
       </mat-card-actions>
 

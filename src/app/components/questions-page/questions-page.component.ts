@@ -23,7 +23,7 @@ export class QuestionsPageComponent implements OnInit {
   /** Stream of unanswered questions */
   unansweredQuestions$!: Observable<IQuestion[]>;
 
-   /** Stream of answered questions */
+  /** Stream of answered questions */
   answeredQuestions$!: Observable<IQuestion[]>;
 
   constructor( private store: Store<QuestionState> ){}

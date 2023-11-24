@@ -8,12 +8,12 @@
   <div *ngIf="(questions$ | async) as questions">
     <ng-container *ngIf="questions.length; else noQuestionsTemplate">
       <app-question-list
-      [showAnswers]="false"
-      [showAnswerForm]="false" 
-      [questions]="questions" 
-      (edit)="editQuestion($event)" 
-      (delete)="deleteQuestion($event)">
-    </app-question-list>
+        [showAnswers]="false"
+        [showAnswerForm]="false" 
+        [questions]="questions" 
+        (edit)="editQuestion($event)" 
+        (delete)="deleteQuestion($event)">
+      </app-question-list>
     </ng-container>
   </div>
   <ng-template #noQuestionsTemplate>
