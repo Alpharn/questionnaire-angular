@@ -15,8 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AppComponent } from './app.component';
 
+import { AppComponent } from './app.component';
 import { ManageQuestionsComponent } from './components/manage-questions/manage-questions.component';
 import { QuestionFormComponent } from './components/question-form/question-form.component';
 import { QuestionListComponent } from './components/question-list/question-list.component';

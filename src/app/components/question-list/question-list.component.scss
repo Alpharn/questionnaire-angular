@@ -49,23 +49,6 @@
 	color: #FFF;
 }
 
-.answer-open::-webkit-scrollbar {
-  width: 8px; 
-}
-
-.answer-open::-webkit-scrollbar-track {
-  background: #FFF; 
-}
-
-.answer-open::-webkit-scrollbar-thumb {
-  background: #cecece; 
-  border-radius: 4px; 
-}
-
-.answer-open::-webkit-scrollbar-thumb:hover {
-  background: #cecece;
-}
-
 .edit-btn:not(:disabled) {
 	background-color: #1C6E8C;
 	color: #FFF;
