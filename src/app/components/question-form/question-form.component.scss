@@ -1,0 +1,55 @@
+.form-container {
+	max-width: 460px;
+	margin: 40px auto;
+}
+
+.card-header {
+	border-bottom: 2px solid #ebebeb;
+	margin-bottom: 10px;
+}
+
+.card-title {
+	font-weight: 500;
+}
+
+.option-hint {
+	display: block;
+	margin: 14px 0;
+}
+
+button {
+	width: 140px;
+}
+
+.action-buttons {
+	gap: 20px;
+	display: flex;
+	justify-content: center;
+	margin: 14px 0;
+}
+
+button.discard-btn:not(:disabled) {
+	background-color: #B0233A;
+	color: #FFF;
+}
+
+button.submit-btn:not(:disabled) {
+	background-color: #1F5065;
+	color: #FFF;
+}
+
+button.option-btn {
+	background-color: #1C6E8C;
+	color: #FFF;
+}
+
+.radio-group {
+	display: flex;
+	flex-direction: column;
+	margin: 15px 0;
+	align-items: flex-start;
+}
+
+.radio-btn {
+	margin: 5px;
+}

@@ -1,0 +1,15 @@
+.questions-page {
+	width: 1400px;
+  margin: 0 auto;
+}
+
+.questions-page-container {
+	display: flex;
+	width: 1400px;
+  margin: 0 auto;
+	.unanswered-questions,
+	.answered-questions {
+		flex: 1;
+		width: 580px;
+	}
+}

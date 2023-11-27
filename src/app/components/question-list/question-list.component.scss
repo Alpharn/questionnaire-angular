@@ -1,0 +1,80 @@
+.questions-container {
+	max-width: 1200px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	align-items: stretch;
+}
+
+.question-card {
+	gap: 10px;
+	width: 240px;
+	height: auto;
+}
+
+.questions-wrapper {
+	margin: 0 auto;
+}
+
+.answer-btn:not(:disabled) {
+	background-color: #1C6E8C;
+	color: #FFF;
+}
+.answer-btn[disabled] {
+  background-color: rgb(201, 201, 201);
+  color: white;
+}
+
+.mat-checkbox {
+	display: flex;
+	flex-direction: column;
+}
+
+.radio-group {
+	display: flex;
+	flex-direction: column;
+}
+
+.answer-buttons {
+	justify-content: center;
+}
+
+.answer-btn, .rollback-btn {
+	width: 100px;
+	margin: 8px 0;
+}
+
+.rollback-btn:not(:disabled) {
+	background-color: #B0233A;
+	color: #FFF;
+}
+
+.edit-btn:not(:disabled) {
+	background-color: #1C6E8C;
+	color: #FFF;
+	width: 100px;
+}
+
+.delete-btn:not(:disabled) {
+	background-color: #B0233A;
+	color: #FFF;
+	width: 100px;
+}
+
+.edit-buttons {
+	justify-content: space-between;
+}
+
+.card-header {
+	flex-direction: column;
+}
+
+.card-title {
+	font-size: 18px;
+}
+
+.card-title, .answer-text {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}

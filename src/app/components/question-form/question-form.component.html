@@ -1,0 +1,52 @@
+<mat-card class="form-container">
+  <mat-card-header class="card-header">
+    <mat-card-title>
+      <h2 class="card-title">{{ mode === 'create' ? 'Create Question' : 'Edit Question' }}</h2>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <form class="form" [formGroup]="questionForm" (ngSubmit)="saveQuestion()">
+      <mat-form-field appearance="outline">
+        <mat-label>Question Text</mat-label>
+        <input matInput formControlName="questionText" placeholder="Enter your question here">
+        <mat-error *ngIf="questionForm.get('questionText')?.invalid">
+          Question text is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-radio-group class="radio-group" aria-label="Select an option" formControlName="questionType">
+        <mat-label>Type of Question:</mat-label>
+        <mat-radio-button *ngFor="let type of questionTypes" class="radio-btn" [value]="type.value">
+          {{ type.label }}
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <div *ngIf="questionForm.get('questionType')?.value !== 'open'" formArrayName="options">
+        <div *ngFor="let optionControl of options.controls; let i = index" [formGroupName]="i">
+          <mat-form-field appearance="outline">
+            <mat-label>Answer Options:</mat-label>
+            <input matInput formControlName="option" placeholder="Enter your option here">
+            <button *ngIf="options.length > 2" matIconSuffix mat-icon-button aria-label="Clear" (click)="removeOption(i)">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="optionControl.invalid">Option is required.</mat-error>
+          </mat-form-field>
+        </div>
+        <mat-hint class="option-hint">At least 2 options required</mat-hint>
+        <button class="option-btn" type="button" matSuffix mat-raised-button aria-label="Add" (click)="addOption()">
+          Add Option
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <mat-card-actions class="action-buttons">
+        <button class="submit-btn" type="submit" mat-raised-button
+        [disabled]="!questionForm.valid || isSubmitted">Save</button>
+        <button class="discard-btn" (click)="cancel()" type="button" mat-raised-button>Discard</button>
+      </mat-card-actions>
+
+    </form>
+  </mat-card-content>
+
+</mat-card>
