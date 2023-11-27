@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { Observable, map } from 'rxjs';
 
 /** NavbarComponent is responsible for rendering the navigation bar at the top of the application */
@@ -22,7 +21,6 @@ export class NavbarComponent {
 
   constructor(
     private router: Router,
-    private location: Location
   ) {}
    
   /** Clearing the local storage */
